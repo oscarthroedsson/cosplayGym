@@ -1,0 +1,15 @@
+services:
+  db:
+    image: mysql:latest
+    container_name: cosplay_gym_database
+    restart: always
+    environment:
+      MYSQL_DATABASE: CosplayGym
+      MYSQL_ROOT_PASSWORD: pjynpd9mtd2XGB0kzm 
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+volumes:
+  db_data:
