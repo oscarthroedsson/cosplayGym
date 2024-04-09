@@ -10,20 +10,42 @@ import {
   parse,
   getDay,
   startOfISOWeek,
+  startOfDay,
+  isSameDay,
+  eachHourOfInterval,
+  getHours,
+  isSameHour,
 } from "date-fns";
 
 // ICONS
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { endOfISOWeek } from "date-fns/endOfISOWeek";
 import { generateMockData } from "../assets/Mock/sessions";
 
 export function Calander() {
   const today = startOfToday();
+
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
+  const [availableSessions, setAvailableSessions] = useState();
 
   const mockData = generateMockData();
+
+  // TEMPORERY UNTILL API EXIST
+  const showSessions = useMemo(() => {
+    return mockData.flatMap((object) => {
+      return {
+        ...object,
+        sessions: object.sessions.filter((session) => {
+          if (getDay(session.start) === getDay(selectedDay)) {
+            return session;
+          }
+        }),
+      };
+    });
+  }, [selectedDay]);
+  console.log("showSessions: ", showSessions);
 
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
   const parsedCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
@@ -32,7 +54,13 @@ export function Calander() {
     start: startOfISOWeek(parse(currentMonth, "MMM-yyyy", new Date())),
     end: endOfISOWeek(endOfMonth(firstDayCurrentMonth)),
   });
-  console.log("daysOfmonth: ", daysOfMonth);
+
+  const hoursOfDay = eachHourOfInterval({
+    start: new Date(selectedDay.setHours(6, 0, 0, 0)),
+    end: new Date(selectedDay.setHours(21, 0, 0, 0)),
+  });
+
+  console.log("hoursOfDay: ", hoursOfDay);
 
   function nextMonth() {
     const nextMonth = add(firstDayCurrentMonth, { months: 1 });
@@ -55,6 +83,21 @@ export function Calander() {
     "col-start-7",
     "col-start-7",
   ];
+
+  function findSessions(clickedDay: Date) {
+    const monkeyV = mockData.flatMap((person, index) => {
+      return person.sessions
+        .filter((session) => isSameDay(session.start, clickedDay))
+        .map((session) => ({
+          start: session.start,
+          end: session.end,
+          image: person.image,
+          name: person.name,
+          role: person.role,
+        }));
+    });
+    console.log("result: ", monkeyV);
+  }
 
   return (
     <>
@@ -101,13 +144,16 @@ export function Calander() {
                       ${isEqual(day, selectedDay) && "text-sky-500"}
                           rounded-md border-slate-100 border-[0.5px] w-full flex justify-center items-center p-1
                           hover:bg-sky-100 hover:border-none
-                          `}
+                          cursor-pointer`}
+                      onClick={() => {
+                        findSessions(day);
+                        setSelectedDay(day);
+                      }}
                     >
                       <button
                         type="button"
                         onClick={() => {
                           console.log("day: ", day);
-                          setSelectedDay(day);
                         }}
                         className=""
                       >
@@ -120,8 +166,65 @@ export function Calander() {
             </div>
           </div>
         </div>
-        <div>{/* sshow perssonal */}</div>
+        {/* Show personal */}
+        <div>
+          {hoursOfDay.map((hour: Date, hourIndex: number) => {
+            console.log("hour: ", hour);
+            return (
+              <>
+                <div className="">
+                  <div key={hourIndex} className="flex justsify-center items-center gap-2">
+                    <p className="text-[10px] text-slate-400">{format(hour, "HH:mm")}</p>
+                    <hr className="h-0.4 w-full mt-1 bg-slate-400" />
+                  </div>
+                  <div className="grid grid-cols-2 grid-rows-auto px-1 py-4 gap-2">
+                    {showSessions.map((personal) => {
+                      return personal.sessions.map((time) => {
+                        console.log("personal: ", personal);
+
+                        return (
+                          getHours(hour) &&
+                          getHours(time.start) === getHours(hour) && (
+                            <>
+                              <div className="divide-y divide-slate-20">
+                                {/* Booking session */}
+                                <div className="w-fit p-2 rounded-md bg-slate-100 hover:shadow-md">
+                                  <div className=" flex w-fit gap-4">
+                                    <img src={personal.image} alt="" className="w-12 rounded-full" />
+                                    <div>
+                                      <p className="font-semibold text-slate-600">{personal.name}</p>
+                                      <div className="text-xs text-slate-500">
+                                        <p>
+                                          Time: {format(time.start, "HH:mm")} - {format(time.end, "HH:mm")}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </>
+                          )
+                        );
+                      });
+                    })}
+                  </div>
+                </div>
+              </>
+            );
+          })}
+        </div>
       </div>
     </>
   );
+}
+{
+  /* {mockData.map((personal) => {
+            return (
+              <>
+                <div>
+                  <img src={personal.image} alt={`profile picture of ${personal.role}`} className="h-12 rounded-full" />
+                </div>
+              </>
+            );
+          })} */
 }

@@ -264,20 +264,22 @@ const getDateForDay = (day: string): Date => {
 
 const personal: Personal[] = [
   {
-    image: "image-1.jpg",
-    name: "Personal 1",
+    image:
+      "https://img.freepik.com/free-photo/handsome-bearded-guy-posing-against-white-wall_273609-20597.jpg?size=626&ext=jpg&ga=GA1.1.1700460183.1712534400&semt=sph",
+    name: "Erik",
     role: "Role 1",
     sessions: generateSessions(sesssionPersonalOne),
   },
   {
-    image: "image-2.jpg",
-    name: "Personal 2",
+    image:
+      "https://media.istockphoto.com/id/1040495528/photo/portrait-of-a-female-personal-trainer-in-the-gym.jpg?s=612x612&w=0&k=20&c=kveWP7cIZerHJtQh2dL_r4MdtNyvWi4KMkXjBM_A5BE= ",
+    name: "Josefin",
     role: "Role 2",
     sessions: generateSessions(sesssionPersonalTwo),
   },
   {
-    image: "image-3.jpg",
-    name: "Personal 3",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReksMfrX8JHbJyacydLf6gu09S4yjKtbWJSUrtu0U6sA&s",
+    name: "Hubbaflii",
     role: "Role 3",
     sessions: generateSessions(sesssionPersonalThree),
   },
