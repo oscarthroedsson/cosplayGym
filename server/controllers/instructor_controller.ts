@@ -7,7 +7,7 @@ import {
 } from "../services/instructor/instructor_Services";
 
 import { Instructor } from "../types";
-import { deleteSessions } from "../services/sesssions/session_Services";
+import { deleteInstructorSessions } from "../services/sesssions/session_Services";
 
 /*
 export const index = async (req, res) => {};
@@ -79,7 +79,7 @@ export const destroyInstrucor = async (req: Request, res: Response) => {
     const intructor = await getInstructor(instructorId);
 
     if (intructor?.sessions) {
-      await deleteSessions(instructorId);
+      await deleteInstructorSessions(instructorId);
     }
 
     await deleteInstructor(instructorId);

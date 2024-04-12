@@ -1,6 +1,6 @@
-import { SessionsObject } from "../../types";
+import { Client, SessionsObject } from "../../types";
 import prisma from "../../prisma";
-import { parseISO, formatISO } from "date-fns";
+
 /*
  id: number;
     instructor: number;
@@ -28,18 +28,60 @@ export const getAllavaibleSessions = async () => {
   });
 };
 
-export const getClientSessions = async (clientId: number) => {
-  return await prisma.sessionsObject.findMany({
-    where: { id: clientId },
+export const getSession = async (sessionId: number) => {
+  return await prisma.sessionsObject.findFirst({
+    where: { id: sessionId, isBooked: false },
   });
 };
 
-export const deleteSessions = async (instructorId: number) => {
+export const deleteInstructorSessions = async (instructorId: number) => {
   return await prisma.sessionsObject.deleteMany({
     where: {
       instructor: {
         equals: instructorId,
       },
     },
+  });
+};
+
+export const deleteSession = async (sessionId: number) => {
+  return await prisma.sessionsObject.delete({
+    where: {
+      id: sessionId,
+    },
+  });
+};
+
+export const bookSession = async (sessionId: number, client: Client) => {
+  return await prisma.sessionsObject.update({
+    where: {
+      id: sessionId,
+    },
+    data: {
+      isBooked: true,
+      client: client.id,
+    },
+  });
+};
+
+// ----------------------------------------- CLIENT -------------------------------------------------
+export const createClient = async (clientData: Client) => {
+  return await prisma.client.create({
+    data: clientData,
+  });
+};
+
+export const getClient = async (clientName: string) => {
+  return await prisma.client.findFirst({
+    where: { name: clientName },
+    include: {
+      bookedSession: true,
+    },
+  });
+};
+
+export const getClientSessions = async (clientId: number) => {
+  return await prisma.sessionsObject.findMany({
+    where: { id: clientId },
   });
 };

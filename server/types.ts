@@ -1,7 +1,13 @@
 export interface Instructor {
-  image: "string";
-  name: "string";
-  role: "string";
+  image: string;
+  name: string;
+  role: string;
+}
+
+export interface Client {
+  id?: number;
+  name: string;
+  sessions?: SessionsObject[];
 }
 
 export interface SessionsObject {

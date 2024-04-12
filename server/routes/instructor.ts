@@ -1,13 +1,5 @@
 import express from "express"; // this should be first import
 import {
-  createSessions,
-  destroySession,
-  destroySessions,
-  showInstructorSessions,
-  showSessions,
-  updateSession,
-} from "../controllers/session_controller";
-import {
   createInstructor,
   destroyInstrucor,
   showInstructor,

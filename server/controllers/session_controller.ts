@@ -1,6 +1,15 @@
 import { Request, Response } from "express";
-import { addSessions, getAllavaibleSessions, getInstructorSessions } from "../services/sesssions/session_Services";
+import {
+  addSessions,
+  bookSession,
+  createClient,
+  deleteSession,
+  getAllavaibleSessions,
+  getClient,
+  getSession,
+} from "../services/sesssions/session_Services";
 import { vaidateSessionsDayTime } from "../validation/validateNewSessions";
+import { Client } from "../types";
 
 /*
 export const index = async (req, res) => {};
@@ -10,17 +19,17 @@ export const update = async (req, res) => {};
 export const destroy = async (req, res) => {};
 */
 
-export const showSessions = (req: Request, res: Response) => {
+export const showSessions = async (req: Request, res: Response) => {
   try {
-    const sessions = getAllavaibleSessions();
+    const sessions = await getAllavaibleSessions();
     res.send({
       message: "Reached showSessions | not implemented",
-      data: [],
+      data: sessions,
     });
   } catch (err) {
     res.send({
       message: "ERROR | Reached showSessions | not implemented",
-      data: [],
+      data: err,
     });
   }
 };
@@ -28,7 +37,6 @@ export const showSessions = (req: Request, res: Response) => {
 export const showInstructorSessions = (req: Request, res: Response) => {
   const instructorId = Number(req.params.id);
   try {
-    const sessions = getInstructorSessions(instructorId);
     res.send({
       message: "Reached showInstructorSessions | not implemented",
       data: [],
@@ -62,13 +70,6 @@ export const createSessions = async (req: Request, res: Response) => {
     res.send({
       message: "Reached createSessions ",
       data: addedSessions,
-      notBoked:
-        bookNot.length < 1
-          ? {
-              message: "Sessions is longer/shorter than an hour or not on the same day",
-              data: bookNot,
-            }
-          : null,
     });
   } catch (err) {
     res.send({
@@ -92,29 +93,66 @@ export const updateSession = (req: Request, res: Response) => {
   }
 };
 
-export const destroySession = (req: Request, res: Response) => {
+export const storeBookSession = async (req: Request, res: Response) => {
+  const client: Client = req.body;
+  const sessionId: number = Number(req.params.sessionId);
+  let addClient;
+
   try {
-    res.send({
-      message: "Reached destroySession | not implemented",
-      data: [],
-    });
+    addClient = await getClient(client.name);
+
+    if (!addClient) {
+      addClient = await createClient(client);
+    }
+
+    try {
+      const sessionToBook = await getSession(sessionId);
+
+      if (!sessionToBook) {
+        res.send({
+          status: "ERROR",
+          message: "Could not get the session you wanted to book from the DB",
+          data: sessionToBook,
+        });
+      }
+
+      await bookSession(sessionId, addClient);
+
+      res.send({
+        status: "success",
+        message: "Client booked on session",
+        data: bookSession,
+      });
+    } catch (err) {
+      res.send({
+        status: "ERROR",
+        message: "Could not book client on session",
+        data: err,
+      });
+    }
   } catch (err) {
     res.send({
-      message: "ERROR | Reached destroySession | not implemented",
-      data: [],
+      status: "ERROR",
+      message: "Could not create Client",
+      data: err,
     });
   }
 };
-export const destroySessions = (req: Request, res: Response) => {
+
+export const destroySession = async (req: Request, res: Response) => {
+  const sessionsId: number = Number(req.params.sessionId);
+
   try {
+    await deleteSession(sessionsId);
+
     res.send({
-      message: "Reached destroySessions | not implemented",
+      message: "success",
       data: [],
     });
   } catch (err) {
     res.send({
       message: "ERROR | Reached destroySessions | not implemented",
-      data: [],
+      data: err,
     });
   }
 };

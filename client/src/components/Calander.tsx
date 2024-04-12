@@ -125,14 +125,18 @@ export function Calander() {
                               <div className="divide-y divide-slate-20">
                                 {/* Booking session */}
                                 <div className="w-full p-2 rounded-md bg-slate-100 hover:shadow-md">
-                                  <div className=" flex w-fit gap-4">
+                                  <div className="flex w-fit gap-4 w-full">
                                     <img src={personal.image} alt="" className="w-12 rounded-full" />
-                                    <div>
+
+                                    <div className="w-full flex flex-col">
                                       <p className="font-semibold text-slate-600">{personal.name}</p>
-                                      <div className="text-xs text-slate-500">
+                                      <div className="text-xs text-slate-500 flex justify-between">
                                         <p>
                                           Time: {format(time.start, "HH:mm")} - {format(time.end, "HH:mm")}
                                         </p>
+                                        <button className="px-3 py-1 bg-emerald-100 rounded-md text-emerald-700 font-semibold hover:bg-emerald-100 hover:shadow-sm ">
+                                          Book session
+                                        </button>
                                       </div>
                                     </div>
                                   </div>
