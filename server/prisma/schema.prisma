@@ -12,3 +12,28 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Instructor {
+  id       Int              @unique @default(autoincrement()) @db.UnsignedInt
+  image    String
+  name     String
+  role     String
+  sessions SessionsObject[]
+}
+
+model SessionsObject {
+  id         Int        @unique @default(autoincrement()) @db.UnsignedInt
+  instructor Int        @db.UnsignedInt
+  Instructor Instructor @relation(fields: [instructor], references: [id])
+  start      DateTime
+  end        DateTime
+  isBooked   Boolean
+  Client     Client?    @relation(fields: [client], references: [id])
+  client     Int?       @db.UnsignedInt
+}
+
+model Client {
+  id            Int              @unique @default(autoincrement()) @db.UnsignedInt
+  name          String
+  bookedSession SessionsObject[]
+}
