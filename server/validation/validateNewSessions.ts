@@ -1,5 +1,5 @@
 import { resolveTxt } from "dns";
-import { SessionsObject } from "../types";
+import { SessionsObject } from "../../types";
 import { differenceInHours, isSameDay } from "date-fns";
 
 export function vaidateSessionsDayTime(sessions: SessionsObject[]) {

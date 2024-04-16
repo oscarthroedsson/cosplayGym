@@ -1,4 +1,4 @@
-export function HeaderComponent() {
+export function Header() {
   return (
     <>
       <div className="flex justify-center items-center flex-col py-12 w-full gap-12">

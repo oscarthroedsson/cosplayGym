@@ -14,8 +14,8 @@ export interface Instructor {
 
 export interface Client {
   id?: number;
-  name: string;
-  sessions?: SessionsObject[];
+  clientName: string;
+  bookedSession?: SessionsObject[];
 }
 
 export interface SessionsObject {

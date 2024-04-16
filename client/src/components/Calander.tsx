@@ -9,20 +9,16 @@ import {
   add,
   parse,
   getDay,
+  startOfISOWeek,
   eachHourOfInterval,
   getHours,
   getDate,
-  endOfWeek,
-  startOfWeek,
-  startOfDay,
-  endOfDay,
-  subHours,
 } from "date-fns";
 
 // ICONS
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
 import { useEffect, useMemo, useState } from "react";
-
+import { endOfISOWeek } from "date-fns/endOfISOWeek";
 import { getAllavaibleInstructorsAndSessions } from "../api/instructor";
 import { Instructor, SessionsObject } from "../../../types";
 import BookingForm from "./BookingForm";
@@ -40,6 +36,7 @@ export function Calander() {
   useEffect(() => {
     const fetchSessions = async () => {
       const sessions = await getAllavaibleInstructorsAndSessions();
+
       setAvailableSessions(sessions);
     };
     fetchSessions();
@@ -65,13 +62,13 @@ export function Calander() {
   const parsedCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
   const daysOfMonth = eachDayOfInterval({
-    start: startOfWeek(parse(currentMonth, "MMM-yyyy", new Date())),
-    end: endOfWeek(endOfMonth(firstDayCurrentMonth)),
+    start: startOfISOWeek(parse(currentMonth, "MMM-yyyy", new Date())),
+    end: endOfISOWeek(endOfMonth(firstDayCurrentMonth)),
   });
 
   const hoursOfDay = eachHourOfInterval({
-    start: startOfDay(selectedDay),
-    end: endOfDay(selectedDay),
+    start: new Date(selectedDay.setHours(6, 0, 0, 0)),
+    end: new Date(selectedDay.setHours(21, 0, 0, 0)),
   });
 
   function nextMonth() {
@@ -114,6 +111,7 @@ export function Calander() {
       {availableSessions.length > 1 && (
         <div className=" flex flex-wrap-reverse items-start justify-center xl:justify-between xl:p-4 gap-2 border-[1px] border-slate-300 rounded-lg">
           {/* Show personal */}
+          {/* Sätt hight på deenna div för att kontrollera höjdens */}
           <div className="h-96 w-full xl:w-96 overflow-hidden overflow-scroll p-4">
             {hoursOfDay.map((hour: Date, hourIndex: number) => {
               return (
@@ -199,8 +197,8 @@ export function Calander() {
             <div className="">
               <div className={`grid grid-cols-7 gap-2 justify-items-center py-2`}>
                 <div className="w-full col-span-7 grid grid-cols-7 gap-2 py-2 justify-items-center font-bold ">
-                  <p>M</p>
-                  <p>T</p>
+                  <p>Mon</p>
+                  <p>Thu</p>
                   <p>Wed</p>
                   <p>Thur</p>
                   <p>Fri</p>
@@ -215,7 +213,7 @@ export function Calander() {
                         className={`
                       ${monthStartDayClasses[getDay(day) - 1]}
                       ${!isSameMonth(day, parsedCurrentMonth) && "text-slate-200"}
-                      ${isEqual(getDate(day), getDate(selectedDay)) && "text-pink-500"}
+                      ${isEqual(getDay(day), getDay(selectedDay)) && "text-pink-500"}
                       ${isSameMonth(day, parsedCurrentMonth) && !isEqual(day, selectedDay) && "text-slate-600"} 
                           rounded-md border-slate-100 border-[0.5px] w-full flex justify-center items-center p-1
                           hover:bg-sky-100 hover:border-none

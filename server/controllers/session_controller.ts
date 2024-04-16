@@ -9,7 +9,7 @@ import {
   getSession,
 } from "../services/sesssions/session_Services";
 import { vaidateSessionsDayTime } from "../validation/validateNewSessions";
-import { Client } from "../types";
+import { Client } from "../../types";
 
 /*
 export const index = async (req, res) => {};

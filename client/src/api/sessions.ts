@@ -7,12 +7,11 @@ export const getAllavaibleSessions = async () => {
 };
 
 export const bookSession = async (bookingInfo: SessionsObject) => {
-  const res = await fetch(`http://localhost:3000/sessions/book/${bookingInfo.id}`, {
+  await fetch(`http://localhost:3000/sessions/book/${bookingInfo.id}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(bookingInfo),
   });
-  const data = await res.json();
 };

@@ -1,4 +1,4 @@
-import { Client, SessionsObject } from "../../types";
+import { Client, SessionsObject } from "../../../types";
 import prisma from "../../prisma";
 
 /*

@@ -1,6 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { formatISO, parseISO, startOfWeek } from "date-fns";
-import { SessionsObject } from "../types";
 
 const prisma = new PrismaClient();
 async function main() {

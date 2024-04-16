@@ -7,7 +7,7 @@ import {
   getInstructor,
 } from "../services/instructor/instructor_Services";
 
-import { Instructor } from "../types";
+import { Instructor } from "../../types";
 import { deleteInstructorSessions } from "../services/sesssions/session_Services";
 
 /*
