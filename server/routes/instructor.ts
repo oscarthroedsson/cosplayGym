@@ -1,5 +1,6 @@
 import express from "express"; // this should be first import
 import {
+  allInstructors,
   createInstructor,
   destroyInstrucor,
   showInstructor,
@@ -26,7 +27,7 @@ create,
 /**
  * Import every file in routes that controll the specific routes
  */
-
+router.get("/show", allInstructors);
 router.get("/show/:instructorId", showInstructor);
 
 router.post("/create", createInstructor);

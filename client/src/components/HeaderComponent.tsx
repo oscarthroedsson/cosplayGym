@@ -6,8 +6,8 @@ export function HeaderComponent() {
           <hgroup className="text-center flex flex-col gap-6 max-w-2xl">
             <h1 className="font-semibold text-4xl">WE CREATE SUPERHEROS</h1>
             <p>
-              We help you get strong, in shape. After a few weeks will you look in the mirror to see your super hero,
-              not in the cinema or televevision
+              We help you get strong and in shape. After a few weeks, you will look in the mirror and see your superhero
+              self, not on the cinema or television.
             </p>
           </hgroup>
 

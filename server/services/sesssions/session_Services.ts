@@ -65,15 +65,17 @@ export const bookSession = async (sessionId: number, client: Client) => {
 };
 
 // ----------------------------------------- CLIENT -------------------------------------------------
-export const createClient = async (clientData: Client) => {
+export const createClient = async (client: Client) => {
   return await prisma.client.create({
-    data: clientData,
+    data: {
+      clientName: client.clientName,
+    },
   });
 };
 
 export const getClient = async (clientName: string) => {
   return await prisma.client.findFirst({
-    where: { name: clientName },
+    where: { clientName },
     include: {
       bookedSession: true,
     },

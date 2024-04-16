@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Calander } from "./components/Calander";
 import { HeaderComponent } from "./components/HeaderComponent";
 import { Navbar } from "./components/Navbar";
-import BookingForm from "./components/BookingForm";
+// import BookingForm from "./components/BookingForm";
 
 function App() {
   const [showCalander, setCalander] = useState(false);
@@ -18,7 +18,7 @@ function App() {
           <div id="calander" className="max-w-7xl mx-auto  ">
             <Calander />
           </div>
-          <BookingForm />
+          {/* <BookingForm /> */}
         </div>
       </main>
     </>

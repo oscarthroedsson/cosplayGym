@@ -51,7 +51,6 @@ export const showInstructorSessions = (req: Request, res: Response) => {
 
 export const createSessions = async (req: Request, res: Response) => {
   const sessions = req.body;
-
   const { book, bookNot } = vaidateSessionsDayTime(sessions); // validate that start/end is same day, and session is an hour
 
   //if we dont have any bookable sessions
@@ -95,45 +94,34 @@ export const updateSession = (req: Request, res: Response) => {
 
 export const storeBookSession = async (req: Request, res: Response) => {
   const client: Client = req.body;
+
+  console.log("SERVER | client: ", client);
   const sessionId: number = Number(req.params.sessionId);
-  let addClient;
+  console.log("SERVER | sessionId: ", sessionId);
+
+  let bookClient;
+
+  bookClient = await getClient(client.clientName);
+  console.log("SERVER | getClient: ", bookClient);
+
+  if (!bookClient || bookClient === null) {
+    bookClient = await createClient(client);
+    console.log("SERVER | createClient: ", bookClient);
+  }
 
   try {
-    addClient = await getClient(client.name);
+    const bookedSession = await bookSession(sessionId, bookClient);
+    console.log("SERVER | bookedSession: ", bookedSession);
 
-    if (!addClient) {
-      addClient = await createClient(client);
-    }
-
-    try {
-      const sessionToBook = await getSession(sessionId);
-
-      if (!sessionToBook) {
-        res.send({
-          status: "ERROR",
-          message: "Could not get the session you wanted to book from the DB",
-          data: sessionToBook,
-        });
-      }
-
-      await bookSession(sessionId, addClient);
-
-      res.send({
-        status: "success",
-        message: "Client booked on session",
-        data: bookSession,
-      });
-    } catch (err) {
-      res.send({
-        status: "ERROR",
-        message: "Could not book client on session",
-        data: err,
-      });
-    }
+    res.send({
+      status: "success",
+      message: "Client booked on session",
+      data: bookSession,
+    });
   } catch (err) {
     res.send({
       status: "ERROR",
-      message: "Could not create Client",
+      message: "Could not book client on session",
       data: err,
     });
   }

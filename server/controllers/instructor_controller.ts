@@ -3,6 +3,7 @@ import {
   addInstructor,
   changesInstructor,
   deleteInstructor,
+  getAllInstructors,
   getInstructor,
 } from "../services/instructor/instructor_Services";
 
@@ -16,6 +17,21 @@ export const store = async (req, res) => {};
 export const update = async (req, res) => {};
 export const destroy = async (req, res) => {};
 */
+
+export const allInstructors = async (req: Request, res: Response) => {
+  try {
+    const instructors = await getAllInstructors();
+    res.send({
+      message: "Reached allInstructors | not implemented",
+      data: instructors,
+    });
+  } catch (err) {
+    res.send({
+      message: "ERROR | Reached allInstructors | not implemented",
+      data: [],
+    });
+  }
+};
 
 export const showInstructor = async (req: Request, res: Response) => {
   const instructorId = Number(req.params.instructorId);

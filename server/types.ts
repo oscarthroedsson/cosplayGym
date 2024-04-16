@@ -2,12 +2,13 @@ export interface Instructor {
   image: string;
   name: string;
   role: string;
+  sessions?: SessionsObject[];
 }
 
 export interface Client {
   id?: number;
-  name: string;
-  sessions?: SessionsObject[];
+  clientName: string;
+  bookedSession?: SessionsObject[];
 }
 
 export interface SessionsObject {
