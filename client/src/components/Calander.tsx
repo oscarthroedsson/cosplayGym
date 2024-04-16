@@ -9,16 +9,20 @@ import {
   add,
   parse,
   getDay,
-  startOfISOWeek,
   eachHourOfInterval,
   getHours,
   getDate,
+  endOfWeek,
+  startOfWeek,
+  startOfDay,
+  endOfDay,
+  subHours,
 } from "date-fns";
 
 // ICONS
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
 import { useEffect, useMemo, useState } from "react";
-import { endOfISOWeek } from "date-fns/endOfISOWeek";
+
 import { getAllavaibleInstructorsAndSessions } from "../api/instructor";
 import { Instructor, SessionsObject } from "../../../types";
 import BookingForm from "./BookingForm";
@@ -36,7 +40,6 @@ export function Calander() {
   useEffect(() => {
     const fetchSessions = async () => {
       const sessions = await getAllavaibleInstructorsAndSessions();
-      console.log("sessions: ", sessions);
       setAvailableSessions(sessions);
     };
     fetchSessions();
@@ -62,13 +65,13 @@ export function Calander() {
   const parsedCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
   const daysOfMonth = eachDayOfInterval({
-    start: startOfISOWeek(parse(currentMonth, "MMM-yyyy", new Date())),
-    end: endOfISOWeek(endOfMonth(firstDayCurrentMonth)),
+    start: startOfWeek(parse(currentMonth, "MMM-yyyy", new Date())),
+    end: endOfWeek(endOfMonth(firstDayCurrentMonth)),
   });
 
   const hoursOfDay = eachHourOfInterval({
-    start: new Date(selectedDay.setHours(6, 0, 0, 0)),
-    end: new Date(selectedDay.setHours(21, 0, 0, 0)),
+    start: startOfDay(selectedDay),
+    end: endOfDay(selectedDay),
   });
 
   function nextMonth() {
@@ -82,7 +85,6 @@ export function Calander() {
   }
   async function handleBookSession() {
     await bookSession(bookClient);
-    console.log("oldSessions: ", showSessions);
 
     // Remove booked session from available sessions so the UI updates
     const newSessions = showSessions.map((personal: Instructor) => {
@@ -112,7 +114,6 @@ export function Calander() {
       {availableSessions.length > 1 && (
         <div className=" flex flex-wrap-reverse items-start justify-center xl:justify-between xl:p-4 gap-2 border-[1px] border-slate-300 rounded-lg">
           {/* Show personal */}
-          {/* Sätt hight på deenna div för att kontrollera höjdens */}
           <div className="h-96 w-full xl:w-96 overflow-hidden overflow-scroll p-4">
             {hoursOfDay.map((hour: Date, hourIndex: number) => {
               return (
@@ -150,7 +151,6 @@ export function Calander() {
                                             <button
                                               className="px-3 py-1 bg-emerald-100 rounded-md text-emerald-700 font-semibold hover:bg-emerald-100 hover:shadow-sm "
                                               onClick={() => {
-                                                console.log("clicked");
                                                 setshowBookForm(true);
                                                 setBookClient({
                                                   ...session,
@@ -224,13 +224,7 @@ export function Calander() {
                           setSelectedDay(day);
                         }}
                       >
-                        <button
-                          type="button"
-                          onClick={() => {
-                            console.log("day: ", day);
-                          }}
-                          className=""
-                        >
+                        <button type="button" className="">
                           <time dateTime={format(day, "d")}>{format(day, "d")}</time>
                         </button>
                       </div>

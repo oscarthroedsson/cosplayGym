@@ -6,30 +6,22 @@ export const addInstructor = async (instructor: CreateInstructor) => {
 };
 
 export const getAllInstructors = async () => {
-  try {
-    return await prisma.instructor.findMany({
-      include: {
-        sessions: true,
-      },
-    });
-  } catch (err) {
-    console.log("getAllInstructors | error: ", err);
-  }
+  return await prisma.instructor.findMany({
+    include: {
+      sessions: true,
+    },
+  });
 };
 
 export const getInstructor = async (instructorId: number) => {
-  try {
-    return await prisma.instructor.findFirst({
-      where: {
-        id: instructorId,
-      },
-      include: {
-        sessions: true,
-      },
-    });
-  } catch (err) {
-    console.log("getInstructor | error: ", err);
-  }
+  return await prisma.instructor.findFirst({
+    where: {
+      id: instructorId,
+    },
+    include: {
+      sessions: true,
+    },
+  });
 };
 
 export const changesInstructor = async (id: number, instructor: CreateInstructor) => {

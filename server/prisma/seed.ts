@@ -102,7 +102,6 @@ async function main() {
   // add the session to the DB
   sessionsArray.forEach(async (instructor) => {
     instructor.forEach(async (session: any) => {
-      console.log("SESSON: ", session);
       await prisma.sessionsObject.createMany({
         data: {
           instructor: session.instructor,

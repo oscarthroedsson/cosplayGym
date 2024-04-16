@@ -64,7 +64,6 @@ export const createSessions = async (req: Request, res: Response) => {
 
   try {
     const addedSessions = await addSessions(book);
-    console.log("addedSessions: ", addedSessions);
 
     res.send({
       message: "Reached createSessions ",
@@ -94,24 +93,17 @@ export const updateSession = (req: Request, res: Response) => {
 
 export const storeBookSession = async (req: Request, res: Response) => {
   const client: Client = req.body;
-
-  console.log("SERVER | client: ", client);
   const sessionId: number = Number(req.params.sessionId);
-  console.log("SERVER | sessionId: ", sessionId);
-
   let bookClient;
 
   bookClient = await getClient(client.clientName);
-  console.log("SERVER | getClient: ", bookClient);
 
   if (!bookClient || bookClient === null) {
     bookClient = await createClient(client);
-    console.log("SERVER | createClient: ", bookClient);
   }
 
   try {
     const bookedSession = await bookSession(sessionId, bookClient);
-    console.log("SERVER | bookedSession: ", bookedSession);
 
     res.send({
       status: "success",

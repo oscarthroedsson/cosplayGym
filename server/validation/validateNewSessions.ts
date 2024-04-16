@@ -16,8 +16,5 @@ export function vaidateSessionsDayTime(sessions: SessionsObject[]) {
     }
   }
 
-  console.log("book: ", book);
-  console.log("bookNot: ", bookNot);
-
   return { book, bookNot };
 }

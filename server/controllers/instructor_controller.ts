@@ -22,7 +22,7 @@ export const allInstructors = async (req: Request, res: Response) => {
   try {
     const instructors = await getAllInstructors();
     res.send({
-      message: "Reached allInstructors | not implemented",
+      message: "success",
       data: instructors,
     });
   } catch (err) {
@@ -89,7 +89,6 @@ export const updateInstructor = async (req: Request, res: Response) => {
 
 export const destroyInstrucor = async (req: Request, res: Response) => {
   const instructorId = Number(req.params.instructorId);
-  console.log("instructorId: ", instructorId);
 
   try {
     const intructor = await getInstructor(instructorId);
