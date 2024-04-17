@@ -2,8 +2,6 @@ import { useState } from "react";
 import logo from "../assets/image/logo.png";
 
 export function Navbar() {
-  const [seeMobileNav, setMobileNav] = useState(false);
-
   return (
     <>
       <nav className="flex justify-between items-center w-full">
