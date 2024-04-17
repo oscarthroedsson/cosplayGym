@@ -1,0 +1,277 @@
+{
+	"info": {
+		"_postman_id": "e1c1445e-ec17-4195-ad52-a5bcb5711ccf",
+		"name": "Cosplay Gym (QLUE)",
+		"description": "API built for an intern assignment.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30680715"
+	},
+	"item": [
+		{
+			"name": "instructor",
+			"item": [
+				{
+					"name": "All Instructors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/instructor/show",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"instructor",
+								"show"
+							]
+						},
+						"description": "To get all the instructor in the DB you should use the following URL:\n\n**http://localhost:3000/instructor/show**"
+					},
+					"response": []
+				},
+				{
+					"name": "An Instructor",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/instructor/show/220",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"instructor",
+								"show",
+								"220"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create_instructor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {       \n    \"image\":\"https://i.pinimg.com/736x/dc/38/ea/dc38eaf88de57efae42f02a2a2684835.jpg\",\n    \"name\":\"Pappa John\",\n    \"role\":\"Instructor\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/instructor/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"instructor",
+								"create"
+							]
+						},
+						"description": "``` typescript\n{           \n \"image\":\"https://i.pinimg.com/736x/dc/38/ea/dc38eaf88de57efae42f02a2a2684835.jpg\",    \n \"name\":\"Pappa John\",    \n \"role\":\"Instructor\"    \n}\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "instructor",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/instructor/destroy/220",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"instructor",
+								"destroy",
+								"220"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update instructor",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Burger bun\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/instructor/update/221",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"instructor",
+								"update",
+								"221"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sessions",
+			"item": [
+				{
+					"name": "Instructors session",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/instructor/show/221",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"instructor",
+								"show",
+								"221"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "available_sessions",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/sessions/show",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"sessions",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_session",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    [\n{ \"instructor\": 2, \"start\": \"2024-05-03T07:00:00\", \"end\": \"2024-05-03T08:00:00\", \"isBooked\": false },\n{ \"instructor\": 2, \"start\": \"2024-05-03T08:00:00\", \"end\": \"2024-05-03T09:00:00\", \"isBooked\": false },\n{ \"instructor\": 2, \"start\": \"2024-05-03T09:00:00\", \"end\": \"2024-05-03T10:00:00\", \"isBooked\": false }\n    ]\n    \n   \n    ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/sessions/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"sessions",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete session",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/sessions/destroy/40",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"sessions",
+								"destroy",
+								"40"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "book_session",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientName\":\"Client Pelle\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/sessions/book/41",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"sessions",
+								"book",
+								"41"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

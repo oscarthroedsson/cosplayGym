@@ -108,7 +108,7 @@ export const storeBookSession = async (req: Request, res: Response) => {
     res.send({
       status: "success",
       message: "Client booked on session",
-      data: bookSession,
+      data: bookedSession,
     });
   } catch (err) {
     res.send({

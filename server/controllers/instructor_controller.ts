@@ -27,8 +27,8 @@ export const allInstructors = async (req: Request, res: Response) => {
     });
   } catch (err) {
     res.send({
-      message: "ERROR | Reached allInstructors | not implemented",
-      data: [],
+      message: "error",
+      data: err,
     });
   }
 };
@@ -40,13 +40,13 @@ export const showInstructor = async (req: Request, res: Response) => {
     const instructor = await getInstructor(instructorId);
 
     res.send({
-      message: "Reached showInstructor | not implemented",
+      message: "success",
       data: instructor,
     });
   } catch (err) {
     res.send({
-      message: "ERROR | Reached showInstructor | not implemented",
-      data: [],
+      message: "error",
+      data: err,
     });
   }
 };
@@ -58,12 +58,12 @@ export const createInstructor = async (req: Request, res: Response) => {
     const addedInstructor = await addInstructor(instructor);
 
     res.send({
-      message: "Reached createInstructor",
+      message: "success",
       data: addedInstructor,
     });
   } catch (err) {
     res.send({
-      message: "ERROR | Reached createInstructor ",
+      message: "error",
       error: err,
     });
   }
@@ -81,8 +81,8 @@ export const updateInstructor = async (req: Request, res: Response) => {
     });
   } catch (err) {
     res.send({
-      message: "ERROR | Reached updateInstructor | not implemented",
-      data: [],
+      message: "error",
+      data: err,
     });
   }
 };
@@ -105,7 +105,7 @@ export const destroyInstrucor = async (req: Request, res: Response) => {
     });
   } catch (err) {
     res.send({
-      message: "ERROR | Reached destroyInstrucor | not implemented",
+      message: "error",
       data: err,
     });
   }
