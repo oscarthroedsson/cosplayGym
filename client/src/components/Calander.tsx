@@ -119,9 +119,9 @@ export function Calander() {
         <div className="h-96 w-full xl:w-96 overflow-hidden overflow-scroll p-4">
           {hoursOfDay.map((hour: Date, hourIndex: number) => {
             return (
-              <>
-                <div className="">
-                  <div key={hourIndex} className="flex justsify-center items-center gap-x-2">
+              <React.Fragment key={hourIndex}>
+                <div>
+                  <div className="flex justsify-center items-center gap-x-2">
                     <p className="text-[10px] text-slate-400">{format(hour, "HH:mm")}</p>
                     <hr className="h-0.4 w-full mt-1 bg-slate-400" />
                   </div>
@@ -174,7 +174,7 @@ export function Calander() {
                       })}
                   </div>
                 </div>
-              </>
+              </React.Fragment>
             );
           })}
         </div>
