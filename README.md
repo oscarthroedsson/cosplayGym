@@ -20,8 +20,8 @@ This application was an assignment for an internship.
 
     → Copy cmd and run in terminal
         npm install
-        npx prisma db seed
         npx prisma generate
+        npx prisma db seed
         npm run dev
 
     cd ..
